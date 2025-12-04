@@ -12,17 +12,17 @@ def main():
     with p.open() as f:
         for line in f:
             line = line.strip()
-            max_digit, max_ids = find_max_in_string(line)
             
-            if len(max_ids) > 1:
-                sum += int(max_digit + max_digit)
-            else:
-                if max_ids[0] == len(line) - 1:
-                    second_max_digit, second_max_ids = find_max_in_string(line[:-1])
-                    sum += int(second_max_digit + max_digit)
-                else:
-                    second_max_digit, second_max_ids = find_max_in_string(line[max_ids[0]+1:])
-                    sum += int(max_digit + second_max_digit)
+            n = 12
+            max_digits = []
+            while n > 0:
+                max_digit, max_ids = find_max_in_string(line[:len(line)-n+1])
+                max_digits.append(max_digit)
+                line = line[max_ids[0]+1:]
+                n -= 1
+
+            sum += int(''.join(max_digits))
+
         print(sum)
 
 def find_max_in_string(s: str):
